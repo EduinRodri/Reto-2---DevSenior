@@ -277,12 +277,13 @@ class Servicio:
 
 
 class Cita:
-    def __init__(self, fecha:str, hora, servicio, veterinario, id_mascota):
+    def __init__(self, fecha:str, hora, servicio, veterinario, id_mascota, id):
         self.__fecha = fecha
         self.__hora = hora
         self.__servicio = servicio
         self.__veterinario = veterinario
         self.__id_mascota = id_mascota
+        self.id = id
         try:
             formato = fecha.split("@")
             self.__ciclo = int(formato[0])
@@ -340,7 +341,7 @@ class Cita:
         self.__id_mascota = id_mascota
     
     def toArray(self):
-        return [self.__fecha, self.__hora, str(self.__servicio), str(self.__veterinario), str(self.__id_mascota)]
+        return [self.__fecha, str(self.__hora), str(self.__servicio), str(self.__veterinario), str(self.__id_mascota), str(self.id)]
     
 # * Este error personalizado debe saltar cuando el usuario dijita un caracter apartado por el sistema
 # Char = Character que significa caracter
@@ -522,7 +523,7 @@ class Datos:
                                         servicio = Servicio(propiedades[0], propiedades[1], propiedades[2], propiedades[3], propiedades[4], int(propiedades[5]))
                                         self.__tablas["servicios"].append(servicio)
                                     elif titulo == "citas":
-                                        cita = Cita(propiedades[0], propiedades[1], propiedades[2], int(propiedades[3]), int(propiedades[4]))
+                                        cita = Cita(propiedades[0], 0, propiedades[1], int(propiedades[2]), int(propiedades[3]), int(propiedades[4]),)
                                         self.__tablas["citas"].append(cita)
                                         pass
                                     pass
@@ -584,7 +585,7 @@ class Datos:
     def agregar(self, elemento: Persona):
         elemento.id = self.__autoincrement[self.use]
         self.__autoincrement[self.use] += 1
-        self.__tablas[self.use].append(elemento)
+        self.__tablas[self.use].append(elemento) 
 
     def obtenerTabla (self):
         return self.__tablas[self.use]
@@ -1367,8 +1368,9 @@ def agendarCitas (datos: Datos):
                 input("Seleccione un servicio...")
                 continue
             datos.use = "citas"
-            cita = Cita(f"{datos.getCiclo()}@{fechaDeCita}", servicio.id, veterinario.id, mascota.getIdentidad(), datos.getNextId())
+            cita = Cita(f"{datos.getCiclo()}@{fechaDeCita}", 0, servicio.id, veterinario.id, mascota.getIdentidad(), datos.getNextId())
             datos.agregar(cita)
+            datos.guardar()
             break
         elif opcion == "7":
             break
@@ -1401,13 +1403,14 @@ def historialCitas (datos: Datos):
         for i, cita in enumerate(citas):
             if cita.getIdMascota() in mascotasId:
                 mascota = mascotas[mascotasId.index(cita.getIdMascota())]
-                print(f"ID Cita: {cita.getId()}")
+                print(f"ID Cita: {cita.id}")
                 print(f"ID Mascota: {mascota.getIdentidad()}")
                 print(f"Nombre Mascota: {mascota.getNombre()}")
                 print(f"Id Veterinario: {cita.getVeterinario()}")
                 print(f"Servicio: {cita.getServicio()}")
                 print(f"Fecha: {cita.getFecha()}")
                 print("══════════════════════════════════════════════")
+                input("Presione Enter para continuar...")
 
     pass
 # Main Programa

@@ -1,1 +1,1 @@
-ciclo(]0||0|~~~~clientes(]1||Ivan|3122003538|0|hdjnsdkkls|~~~~veterinarios(]1||Eduin|3002004567|0|Cardiologia|0978907849|100111|~~~~mascotas(]0||~~~
+ciclo(]0||0|~~~~clientes(]0||~~~veterinarios(]0||~~~mascotas(]1||Tody|Perro|Pincher|1|0|0|~Tody|Perro|Pincher|1|0|0|~~~~servicios(]1||Cesarea|jdjfjsds|10.0|10000.0|4.0|~~~~citas(]0||~~~

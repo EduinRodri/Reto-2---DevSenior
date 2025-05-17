@@ -177,7 +177,7 @@ class Veterinario(Persona):
     def toArray(self):
         array = super().toArray()
         array.append(self.__especialidad)
-        array.append(self.__licencia)
+        array.append(str(self.__licencia))
         array.append(self.__horario)
         return array
 
@@ -229,7 +229,7 @@ class Mascota:
         self.__dueno = dueno
 
     def toArray(self):
-        return [self.__nombre, self.__especie, self.__raza, self.__edad, self.__identidad, self.__dueno]
+        return [self.__nombre, self.__especie, self.__raza, str(self.__edad), str(self.__identidad), str(self.__dueno)]
 
 
 class Servicio:
@@ -271,7 +271,7 @@ class Servicio:
         self.__frecuencia = frecuencia
     
     def toArray(self):
-        return [self.__tipo, self.__descripcion, self.__duracion, self.__costo, self.__frecuencia]
+        return [self.__tipo, self.__descripcion, str(self.__duracion), str(self.__costo), str(self.__frecuencia)]
 
 
 class Cita:
@@ -338,7 +338,7 @@ class Cita:
         self.__id_mascota = id_mascota
     
     def toArray(self):
-        return [self.__fecha, self.__hora, self.__servicio, self.__veterinario, self.__id_mascota]
+        return [self.__fecha, self.__hora, str(self.__servicio), str(self.__veterinario), str(self.__id_mascota)]
     
 # * Este error personalizado debe saltar cuando el usuario dijita un caracter apartado por el sistema
 # Char = Character que significa caracter

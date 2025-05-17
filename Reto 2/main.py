@@ -295,6 +295,13 @@ class Cita:
 
     def getFecha(self):
         return self.__fecha
+    
+    def getParseFecha (self):
+        day = int(self.__fecha.split("@")[1])
+        month = self.__fecha.split("@")[0]
+        year = 2025
+        return ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"][day] + " del ciclo " + month + " del año " + str(year)
+        
 
     def setFecha(self, fecha:str):
         self.__fecha = fecha
@@ -1408,7 +1415,7 @@ def historialCitas (datos: Datos):
                 print(f"Nombre Mascota: {mascota.getNombre()}")
                 print(f"Id Veterinario: {cita.getVeterinario()}")
                 print(f"Servicio: {cita.getServicio()}")
-                print(f"Fecha: {cita.getFecha()}")
+                print(f"Fecha: {cita.getParseFecha()}")
                 print("══════════════════════════════════════════════")
                 input("Presione Enter para continuar...")
 

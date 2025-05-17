@@ -1,1 +1,1 @@
-ciclo(]0||0|~~~~clientes(]0||~~~veterinarios(]0||~~~mascotas(]1||Tody|Perro|Pincher|1|0|0|~Tody|Perro|Pincher|1|0|0|~~~~servicios(]1||Cesarea|jdjfjsds|10.0|10000.0|4.0|~~~~citas(]0||~~~
+ciclo(]0||0|%~~~clientes(]1||Ivan|3122003538|0|ndjjklsjfklsfjks|%~~~veterinarios(]1||Eduin|3200901020|0|Cardiologia|8372098903|110110|%~~~mascotas(]1||Tody|Perro|Pincher|1|0|0|%Tody|Perro|Pincher|1|0|0|%~~~servicios(]1||Cardiologia|Revision|1.0|1000.0|5.0|0|%~~~citas(]0||~~~

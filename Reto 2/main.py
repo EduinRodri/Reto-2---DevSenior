@@ -3,7 +3,7 @@ from datetime import date
 import os
 import platform
 
-SEPARADOR_ELEMENTO = "~"
+SEPARADOR_ELEMENTO = "%"
 SEPARADOR_TABLA = "~~~"
 PROPIEDAD = "|"
 HEADER = "||"
@@ -233,12 +233,13 @@ class Mascota:
 
 
 class Servicio:
-    def __init__(self, tipo, descripcion, duracion, costo, frecuencia):
+    def __init__(self, tipo, descripcion, duracion, costo, frecuencia, id):
         self.__tipo = tipo
         self.__descripcion = descripcion
         self.__duracion = duracion
         self.__costo = costo
         self.__frecuencia = frecuencia
+        self.id = id
     
     def getTipo(self):
         return self.__tipo
@@ -271,7 +272,8 @@ class Servicio:
         self.__frecuencia = frecuencia
     
     def toArray(self):
-        return [self.__tipo, self.__descripcion, str(self.__duracion), str(self.__costo), str(self.__frecuencia)]
+        return [self.__tipo, str(self.__descripcion), str(self.__duracion), str(self.__costo), str(self.__frecuencia), str(self.id)]
+
 
 
 class Cita:
@@ -509,6 +511,7 @@ class Datos:
                                     elif titulo == "clientes":
                                         cliente = Cliente(propiedades[0], propiedades[1], int(propiedades[2]), propiedades[3])
                                         self.__tablas["clientes"].append(cliente)
+                                        
                                     elif titulo == "veterinarios":
                                         veterinario = Veterinario(propiedades[0], propiedades[1], int(propiedades[2]), propiedades[3], propiedades[4], propiedades[5])
                                         self.__tablas["veterinarios"].append(veterinario)
@@ -516,19 +519,29 @@ class Datos:
                                         mascota = Mascota(propiedades[0], propiedades[1], propiedades[2], propiedades[3], int(propiedades[4]), int(propiedades[5]))
                                         self.__tablas["mascotas"].append(mascota)
                                     elif titulo == "servicios":
-                                        servicio = Servicio(propiedades[0], propiedades[1], propiedades[2], propiedades[3], propiedades[4])
+                                        servicio = Servicio(propiedades[0], propiedades[1], propiedades[2], propiedades[3], propiedades[4], int(propiedades[5]))
                                         self.__tablas["servicios"].append(servicio)
                                     elif titulo == "citas":
                                         cita = Cita(propiedades[0], propiedades[1], propiedades[2], int(propiedades[3]), int(propiedades[4]))
                                         self.__tablas["citas"].append(cita)
+                                        pass
+                                    pass
+                                pass
+                            pass
+                        pass
+                else:
+                    print("El archivo de datos esta vacio, por favor reinicie el programa")
         except FileNotFoundError:
             with open("datos.txt", "w") as datos:
                 print("Archivo de datos creado correctamente vuelva a ejecutar el programa")
+                datos.write("Archivo de datos creado correctamente vuelva a ejecutar el programa")
                 self.__state = "reload"
 
         except ValueError:
-            print("Parece que la base de datos esta corrupta vuelva a intentarlo")
-            self.__state = "error"
+            with open("datos.txt", "w") as datos:
+                print("Parece que la base de datos esta corrupta vuelva a intentarlo")
+                datos.write("Parece que la base de datos esta corrupta vuelva a intentarlo")
+                self.__state = "error"
 
     def getCiclo (self):
         return self.__ciclo
@@ -558,6 +571,12 @@ class Datos:
 
     def eliminar(self, index: int):
         self.__tablas[self.use].pop(index)
+
+    def getNextId (self):
+        return self.__autoincrement[self.use]
+    
+    def length (self):
+        return len(self.__tablas[self.use])
     
     def largo (self):
         return len(self.__tablas[self.use])
@@ -594,8 +613,7 @@ class Datos:
         horario: list[bool] = [
             False, False, False, False, False, False
         ]
-        for i in len(self.__tablas['citas']):
-            cita: Cita = self.__tablas['cita'][i]
+        for cita in self.__tablas['citas']:
             if cita.getVeterinario() == idVeterinario and self.__ciclo == cita.getCiclo():
                 horario[cita.getFecha()] = True
         return horario
@@ -603,8 +621,7 @@ class Datos:
 
     def getDiaHorarioVeterinario (self, idVeterinario: int, dia: int):
         retorno = False
-        for i in len(self.__tablas['citas']):
-            cita: Cita = self.__tablas['cita'][i]
+        for cita in self.__tablas['citas']:
             if cita.getVeterinario() == idVeterinario and self.__ciclo == cita.getCiclo() and cita.getDia() == dia:
                 retorno = True
         return retorno

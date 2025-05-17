@@ -1333,7 +1333,7 @@ def agendarCitas (datos: Datos):
             if mascota is None:
                 input("Seleccione una mascota...")
                 continue
-            if fechaDeCita is -1:
+            if fechaDeCita == -1:
                 input("Seleccione una fecha adecuada...")
                 continue
             if veterinario is None:
@@ -1358,7 +1358,36 @@ def agendarCitas (datos: Datos):
 
     pass
 def historialCitas (datos: Datos):
-    print("Seleccione un cliente para la ")
+    print("Seleccione un cliente para ver su historial")
+    datos.use = "clientes"
+    mostrarTabla(datos.obtenerTabla())
+    request = input(" ")
+    if request.isnumeric():
+        request = int(request) - 1
+        cliente: Cliente = datos.obtener(request)
+        print("Historial de citas del cliente: " + cliente.getNombre())
+        datos.use = "mascotas"
+        mascotasId: list[int] = []
+        mascotas: list[Mascota] = []
+        for element in datos.obtenerTabla():
+            if element.getDueno() == cliente.id:
+                mascotasId.append(element.getIdentidad())
+                mascotas.append(element)
+                pass
+            pass
+        datos.use = "citas"
+        citas: list[Cita] = datos.obtenerTabla()
+        for i, cita in enumerate(citas):
+            if cita.getIdMascota() in mascotasId:
+                mascota = mascotas[mascotasId.index(cita.getIdMascota())]
+                print(f"ID Cita: {cita.getId()}")
+                print(f"ID Mascota: {mascota.getIdentidad()}")
+                print(f"Nombre Mascota: {mascota.getNombre()}")
+                print(f"Id Veterinario: {cita.getVeterinario()}")
+                print(f"Servicio: {cita.getServicio()}")
+                print(f"Fecha: {cita.getFecha()}")
+                print("══════════════════════════════════════════════")
+
     pass
 # Main Programa
 def main():

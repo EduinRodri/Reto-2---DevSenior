@@ -643,7 +643,7 @@ def preguntar (pregunta: str):
     else:
         return False
 
-def pedirNumero (pregunta: str):
+def pedirNumero (pregunta: str, max: int | float = 0, min: int | float = 0):
     retorno = 0
     while True:
         opcion = input(pregunta)
@@ -652,6 +652,10 @@ def pedirNumero (pregunta: str):
         elif isFloat(opcion):
             opcion = float(opcion)
         else: 
+            print("Opcion invalida")
+            continue
+
+        if (opcion > max and max > 0) or opcion < min :
             print("Opcion invalida")
             continue
         retorno = opcion
